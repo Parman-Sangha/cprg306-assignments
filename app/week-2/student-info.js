@@ -5,7 +5,7 @@ export default function StudentInfo() {
     <div>
       <h1>Parman Sangha</h1>
       <Link
-        href="https://github.com/Parman-Sangha?tab=repositories"
+        href="https://github.com/Parman-Sangha/cprg306-assignments"
         target="_blank"
       >
         Github Repository
