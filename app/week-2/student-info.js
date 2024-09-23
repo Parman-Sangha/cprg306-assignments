@@ -8,7 +8,7 @@ export default function StudentInfo() {
         href="https://github.com/Parman-Sangha/cprg306-assignments"
         target="_blank"
       >
-        Github Repository
+        link to my Github Repository's
       </Link>
     </div>
   );
