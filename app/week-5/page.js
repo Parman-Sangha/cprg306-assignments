@@ -1,7 +1,5 @@
-"use client";
-import { useState } from "react";
-import Counter from "./new-item";
+import NewItem from "./new-item";
 
 export default function Page() {
-  return <Counter />;
+  return <NewItem />;
 }
