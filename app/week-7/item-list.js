@@ -2,12 +2,11 @@
 
 import React, { useState } from "react";
 import Item from "./item";
-import items from "./items.json";
 
-export default function ItemList() {
+export default function ItemList({ items }) {
   const [sortBy, setSortBy] = useState("name");
 
-  const sortedItems = items.sort((a, b) =>
+  const sortedItems = [...items].sort((a, b) =>
     sortBy === "name"
       ? a.name.localeCompare(b.name)
       : a.category.localeCompare(b.category)
@@ -15,8 +14,7 @@ export default function ItemList() {
 
   return (
     <div>
-      {/* Sorting buttons */}
-      <div className="mb-10">
+      <div className="mb-10 pt-10 ps-9 text-center">
         <button
           className={`p-4 ${sortBy === "name" ? "bg-blue-600" : "bg-gray-800"}`}
           onClick={() => setSortBy("name")}
@@ -32,8 +30,6 @@ export default function ItemList() {
           Sort by Category
         </button>
       </div>
-
-      {/* Rendering sorted items */}
       <ul className="flex flex-col gap-4">
         {sortedItems.map((item) => (
           <Item

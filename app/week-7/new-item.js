@@ -1,72 +1,65 @@
 "use client";
-// Had to update week-4 code due to it not working with my form.
-import { useState } from "react";
 
-export default function AddNewItem() {
-  const CATEGORIES = [
+import React, { useState } from "react";
+
+export default function NewItem({ onAddItem }) {
+  const CATEGORY_OPTIONS = [
+    "Produce",
     "Dairy",
     "Bakery",
-    "Produce",
-    "Frozen Foods",
     "Meat",
-    "Dry Goods",
+    "Frozen Foods",
     "Canned Goods",
+    "Dry Goods",
     "Beverages",
     "Snacks",
     "Household",
     "Other",
   ];
 
-  const [itemName, setItemName] = useState("");
-  const [itemQuantity, setItemQuantity] = useState(1);
-  const [itemCategory, setItemCategory] = useState("Produce");
+  const [quantity, setQuantity] = useState(1);
+  const [name, setName] = useState("");
+  const [category, setCategory] = useState("Produce");
 
-  const increaseQuantity = () => {
-    if (itemQuantity < 20) {
-      setItemQuantity((prevQuantity) => prevQuantity + 1);
-    }
-  };
+  const increment = () => quantity < 20 && setQuantity(quantity + 1);
+  const decrement = () => quantity > 1 && setQuantity(quantity - 1);
 
-  const decreaseQuantity = () => {
-    if (itemQuantity > 1) {
-      setItemQuantity((prevQuantity) => prevQuantity - 1);
-    }
-  };
-
-  const handleFormSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     const newItem = {
-      name: itemName,
-      quantity: itemQuantity,
-      category: itemCategory,
+      id: Math.random().toString(36).substring(2, 11),
+      name,
+      quantity,
+      category,
     };
 
-    console.log(newItem);
-    alert(`Item Added: ${itemQuantity} ${itemName} in ${itemCategory}`);
-
-    setItemName("");
-    setItemQuantity(1);
-    setItemCategory("Produce");
+    onAddItem(newItem);
+    setName("");
+    setQuantity(1);
+    setCategory("Produce");
   };
 
   return (
     <form
-      onSubmit={handleFormSubmit}
-      className="p-6 mt-8 mx-auto bg-white w-full max-w-lg rounded-xl shadow-xl"
+      onSubmit={handleSubmit}
+      className="p-6 mt-8 mx-auto bg-gray-700 w-full max-w-lg rounded-xl shadow-xl pb-4"
     >
-      <h2 className="text-2xl font-bold text-center mb-6 text-black">
+      <h2 className="text-2xl font-bold text-center mb-6 text-white">
         Add a New Item
       </h2>
 
       <div className="mb-5">
-        <label className="block text-sm font-semibold text-black mb-2">
+        <label
+          className="block text-sm font-semibold text-white
+         mb-2"
+        >
           Item Name
         </label>
         <input
           type="text"
-          value={itemName}
-          onChange={(e) => setItemName(e.target.value)}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
           required
           placeholder="Enter item name"
           className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-black"
@@ -74,24 +67,24 @@ export default function AddNewItem() {
       </div>
 
       <div className="mb-5">
-        <label className="block text-sm font-semibold text-black mb-2">
+        <label className="block text-sm font-semibold text-white mb-2">
           Quantity
         </label>
         <div className="flex items-center space-x-4">
           <button
             type="button"
-            onClick={decreaseQuantity}
-            disabled={itemQuantity === 1}
-            className="bg-red-500 text-white px-4 py-2 rounded-lg disabled:bg-gray-300 transition duration-200"
+            onClick={decrement}
+            disabled={quantity === 1}
+            className="bg-red-500 text-black px-4 py-2 rounded-lg disabled:bg-gray-300"
           >
             -
           </button>
-          <span className="text-xl font-medium text-black">{itemQuantity}</span>
+          <span className="text-xl font-medium text-white">{quantity}</span>
           <button
             type="button"
-            onClick={increaseQuantity}
-            disabled={itemQuantity === 20}
-            className="bg-green-500 text-white px-4 py-2 rounded-lg disabled:bg-gray-300 transition duration-200"
+            onClick={increment}
+            disabled={quantity === 20}
+            className="bg-blue-600 text-black px-4 py-2 rounded-lg disabled:bg-gray-300"
           >
             +
           </button>
@@ -99,17 +92,17 @@ export default function AddNewItem() {
       </div>
 
       <div className="mb-5">
-        <label className="block text-sm font-semibold text-black mb-2">
+        <label className="block text-sm font-semibold text-white mb-2">
           Category
         </label>
         <select
-          value={itemCategory}
-          onChange={(e) => setItemCategory(e.target.value)}
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
           className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
         >
-          {CATEGORIES.map((category) => (
-            <option key={category} value={category}>
-              {category}
+          {CATEGORY_OPTIONS.map((cat) => (
+            <option key={cat} value={cat}>
+              {cat}
             </option>
           ))}
         </select>
