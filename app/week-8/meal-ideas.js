@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 
-// Fetch meal ideas based on the selected ingredient
 const fetchMealIdeas = async (ingredient) => {
   if (!ingredient) return [];
 
